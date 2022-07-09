@@ -1,0 +1,37 @@
+
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:5
+    ports:
+        - 27018:27017
+
+  redis:
+    image: 'redislabs/redismod'
+    ports:
+      - '6379:6379'
+
+  web:
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: ./web/Dockerfile.dev
+    command: npm run watch
+    hostname: web
+    ports:
+      - '4500:5000'
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+
+  nginx:
+    build: ./nginx
+    ports:
+    - '80:80'
+    depends_on:
+    - web
