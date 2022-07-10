@@ -1,5 +1,5 @@
 // In this file you can configure migrate-mongo
-const env = require("./server/config");
+const env = require("./server/dev-config"); // change to ./server/live-config for live
 
 const config = {
   mongodb: {

@@ -48,8 +48,8 @@ app.listen(port, () => {
     console.log(`Server running at: ${port}`);
 });
 
-app.get('/', (req, res) => {
-  res.send('Dockerized CJ Application');
-})
+app.get('/docker', (req, res) => {
+  res.send('Dockerized CJ API');
+});
 
 module.exports = app;

@@ -5,7 +5,19 @@ WORKDIR '/app'
 COPY ./web/package.json ./
 RUN npm install
 
-COPY . .
-COPY ./web/.env ./
+# COPY ./web/bin ./bin
+# COPY ./web/collections ./collections
+# COPY ./web/config ./config
+# COPY ./web/migrations ./migrations
+# COPY ./web/routes/api ./routes/api
+# COPY ./web/routes/controllers/cj ./routes/controllers/cj
+# COPY ./web/routes/controllers/mlm ./routes/controllers/mlm
+# COPY ./web/server ./server
+# COPY ./web/shared ./shared
+# COPY ./web/app.js ./app.js
+# COPY ./web/migrate-mongo-config.js ./migrate-mongo-config.js
 
-CMD ["npm", "run", "start"]
+ADD ./web/entrypoint-dev.sh /entrypoint-dev.sh
+RUN chmod +x /entrypoint-dev.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint-dev.sh"]

@@ -6,6 +6,8 @@ services:
     image: mongo:5
     ports:
         - 27018:27017
+    volumes:
+        - './data:/data/db'
 
   redis:
     image: 'redislabs/redismod'
@@ -17,13 +19,22 @@ services:
     build:
       context: ./
       dockerfile: ./web/Dockerfile.dev
-    command: npm run watch
     hostname: web
     ports:
       - '4500:5000'
     volumes:
-      - ./web:/app
-      - /app/node_modules
+      - ./web/node_modules:/app/node_modules
+      - ./web/bin:/app/bin
+      - ./web/collections:/app/collections
+      - ./web/config:/app/config
+      - ./web/migrations:/app/migrations
+      - ./web/routes:/app/routes
+      - ./web/server:/app/server
+      - ./web/shared:/app/shared
+      - ./web/app.js:/app/app.js
+      - ./web/migrate-mongo-config.js:/app/migrate-mongo-config.js
+      # - ./web:/app
+      # - /app/node_modules
     depends_on:
       - mongodb
     links:
